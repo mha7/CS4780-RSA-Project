@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -74,7 +76,7 @@ public class KeyGen {
 		List<BigInteger> publicKey = new ArrayList<BigInteger>();
 		
 		publicKey.add(relativePrime);
-		publicKey.add(totient);
+		publicKey.add(keyProduct);
 		
 		return publicKey;
 	}
@@ -84,7 +86,7 @@ public class KeyGen {
 		List<BigInteger> privateKey = new ArrayList<BigInteger>();
 		
 		privateKey.add(d);
-		privateKey.add(totient);
+		privateKey.add(keyProduct);
 		
 		return privateKey;
 	}
@@ -93,7 +95,7 @@ public class KeyGen {
 		try(OutputStream os = new FileOutputStream("pubkey.rsa");
 			ObjectOutputStream oos = new ObjectOutputStream(os);){
 			oos.writeObject(this.getRelativePrime());
-			oos.writeObject(this.getTotient());
+			oos.writeObject(this.getKeyProduct());
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -104,7 +106,7 @@ public class KeyGen {
 		try(OutputStream os = new FileOutputStream("privkey.rsa");
 			ObjectOutputStream oos = new ObjectOutputStream(os);){
 			oos.writeObject(this.getD());
-			oos.writeObject(this.getTotient());
+			oos.writeObject(this.getKeyProduct());
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -152,10 +154,35 @@ public class KeyGen {
 		List<BigInteger> privateKey = keyGen.readKeyFile("privkey.rsa");
 		
 		System.out.println("Comparing public E: " + publicKey.get(0).equals(keyGen.getRelativePrime()));
-		System.out.println("Comparing public N: " + publicKey.get(1).equals(keyGen.getTotient()));
+		System.out.println("Comparing public N: " + publicKey.get(1).equals(keyGen.getKeyProduct()));
 		
 		System.out.println();		
 		System.out.println("Comparing private D: " + privateKey.get(0).equals(keyGen.getD()));
-		System.out.println("Comparing private N: " + privateKey.get(1).equals(keyGen.getTotient()));
+		System.out.println("Comparing private N: " + privateKey.get(1).equals(keyGen.getKeyProduct()));
+		
+		String msg= "This not what it looks like!";
+		byte[] msb = msg.getBytes();
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+			md.update(msb);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//System.out.println(new String(md.digest()));
+		
+		BigInteger t = new BigInteger(1, md.digest());
+		System.out.println("ori: "+t+"\n");
+		System.out.println(new String(t.toByteArray()));
+		
+		BigInteger sig = t.modPow(privateKey.get(0), privateKey.get(1));
+		System.out.println("signature: " + sig + "\n");
+		
+		BigInteger rev = sig.modPow(publicKey.get(0), publicKey.get(1));
+		System.out.println("rev: " + rev + "\n");
+		
+		System.out.println(new String(rev.toByteArray()));
 	}
 }
