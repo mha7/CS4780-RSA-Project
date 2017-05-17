@@ -151,10 +151,9 @@ public class DigitalSignature {
 			
 			//Update the md5 with the byte message.
 			md.update(msg2);
-			//System.out.println(new String(msg));
 
 			byte[] digest = md.digest();
-			System.out.println(digest + "  " + revisedRevDigest);
+			System.out.println(new String(digest) + "  " + new String(revisedRevDigest));
 			
 			System.out.println(MessageDigest.isEqual(digest, revisedRevDigest));
 		}

@@ -172,7 +172,7 @@ public class KeyGen {
 		}
 		
 		//System.out.println(new String(md.digest()));
-		
+		/*
 		BigInteger t = new BigInteger(1, md.digest());
 		System.out.println("ori: "+t+"\n");
 		System.out.println(new String(t.toByteArray()));
@@ -183,6 +183,6 @@ public class KeyGen {
 		BigInteger rev = sig.modPow(publicKey.get(0), publicKey.get(1));
 		System.out.println("rev: " + rev + "\n");
 		
-		System.out.println(new String(rev.toByteArray()));
+		System.out.println(new String(rev.toByteArray()));*/
 	}
 }
