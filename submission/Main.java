@@ -1,12 +1,6 @@
-package rsa;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import java.io.File;
-
-import rsa.KeyGen;
-import rsa.DigitalSignature;
-import rsa.ChangeByte;
 
 public class Main { 
 	
@@ -63,7 +57,7 @@ public class Main {
 				System.out.println();
 			}
 			if (Integer.parseInt(input) == 2) {
-				System.out.println("Please enter the .txt you wish to encrypt: ");
+				System.out.println("Please enter the .txt you wish to sign: ");
 				filepath = scan.next();
 				
 				DigitalSignature ds = new DigitalSignature();
@@ -77,7 +71,7 @@ public class Main {
 				}
 			}
 			if (Integer.parseInt(input) == 3) {
-				System.out.println("Please enter the .txt.signed you wish to decrypt: ");
+				System.out.println("Please enter the .txt.signed you wish to verify: ");
 				filepath = scan.next();
 				
 				DigitalSignature ds = new DigitalSignature();

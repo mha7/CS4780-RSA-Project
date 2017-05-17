@@ -1,5 +1,3 @@
-package rsa;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,8 +10,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
-
-import rsa.KeyGen;
 
 public class DigitalSignature {
 	

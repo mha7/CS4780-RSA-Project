@@ -1,5 +1,3 @@
-package rsa;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +8,6 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import rsa.DigitalSignature;
 import java.util.Scanner;
 
 public class ChangeByte {
