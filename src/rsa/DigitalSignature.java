@@ -67,7 +67,8 @@ public class DigitalSignature {
 	}
 	
 	public void signMessageToFile(byte[] msg, BigInteger digInt){
-		try(OutputStream os = new FileOutputStream("message.txt.signed");
+		try(
+				OutputStream os = new FileOutputStream("message.txt.signed");
 				ObjectOutputStream oos = new ObjectOutputStream(os);){
 				//The big integer digest of the sent message.
 				oos.writeObject(digInt);
